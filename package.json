@@ -1,0 +1,38 @@
+{
+  "name": "aff_search",
+  "version": "1.0.0",
+  "description": "tool to check up on affiliate deals",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skaplun/aff_search.git"
+  },
+  "keywords": [
+    "affiliate",
+    "search",
+    "affiliate",
+    "checkup",
+    "check",
+    "on",
+    "your",
+    "affiliates"
+  ],
+  "author": "shai kaplun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skaplun/aff_search/issues"
+  },
+  "homepage": "https://github.com/skaplun/aff_search#readme",
+  "dependencies": {
+    "bluebird": "^3.3.5",
+    "cheerio": "^0.20.0",
+    "compression": "^1.6.1",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "querystring": "^0.2.0",
+    "request": "^2.72.0"
+  }
+}
