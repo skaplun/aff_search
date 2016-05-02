@@ -57,5 +57,4 @@ function aff_search(query, tld, brand){
 }
 
 
-
-module.export = aff_search
+module.exports = aff_search

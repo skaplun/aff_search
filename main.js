@@ -1,5 +1,5 @@
 
-var google = require('./aff_Search')
+var aff_search = require('./aff_search')
 // Load required packages
 var express = require('express');
 var compression = require('compression');
@@ -12,20 +12,32 @@ var app = express();
 
 // Add static middleware
 var oneDay = 86400000;
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: oneDay }));
 app.use(compression());
 
-
-app.set('views', path.join(__dirname, 'views'));
+app.use(express.static( path.join(__dirname, '/public')));
+app.set('views', path.join(__dirname, 'views'), { maxAge: oneDay });
 app.set('view engine', 'jade');
+
 
 // Create our Express router
 var router = express.Router();
 
 // Initial dummy route for testing
 router.get('/', function(req, res) {
-    res.render('home');
+    res.render('home', { scripts: ['./public/client.js']});
 });
+
+router.get('/response', function(req, res) {
+    if(global.data){
+        res.send(global.data)
+        
+    }else{
+        res.send('not yet')
+        
+    }
+});
+
+global = {};
 
 router.post('/', function(req, res) {
     var form = new formidable.IncomingForm();
@@ -36,11 +48,12 @@ router.post('/', function(req, res) {
         data = util.inspect({
             fields: fields
         })
-        aff_search('best casinos online', 'com.au', 'aladdins').then(function(data){
-            res.locals.data = data
-            res.render('home2');
+        console.log(data)
+        aff_search(data.keyword, data.tld, data.brand).then(function(d){
+            global.data = d
         
         })
+        res.render('home');
        
     });
 });
@@ -49,10 +62,5 @@ router.post('/', function(req, res) {
 app.use(router);
 
 // Start the server
-app.listen(3000);
+app.listen(process.env.PORT, process.env.IP);
 
-
-
-
-
-;

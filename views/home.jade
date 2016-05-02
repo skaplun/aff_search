@@ -7,3 +7,8 @@ block content
         input(type="text", name="tld", placeholder="tld")
         input(type="text", name="brand",placeholder="brand")
         input(type="submit")
+        div#results
+        if (typeof(data) !== 'undefined')
+            p #{data}
+        else
+            p pick something
