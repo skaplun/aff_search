@@ -36,7 +36,7 @@ router.post('/', function(req, res) {
         data = util.inspect({
             fields: fields
         })
-        aff_search('best casinos online', 'com.au', 'aladdins').then(function(data){
+        google('best casinos online', 'com.au', 'aladdins').then(function(data){
             res.locals.data = data
             res.render('home2');
         
