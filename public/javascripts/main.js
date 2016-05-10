@@ -4,7 +4,7 @@ $(document).ready(function(){
     $('#keySearch').submit(function(e){
         e.preventDefault();
         
-        data = JSON.stringify($(this).serialize())
+        data = $(this).serialize()
         console.log(data)
         
         $.post('/', data, getResponse)
@@ -14,8 +14,13 @@ $(document).ready(function(){
 
     function getResponse (data){
         var d = Object.keys(data)
-        d.forEach(function(k){
-            $('#results').append('<p>' + k + ': ' + data[k] + '</p>')
+        console.log(data)
+        d.forEach(function(k) {
+            var resultKeys = Object.keys(data[k])
+            resultKeys.forEach(function(key) {
+                $('#results').append('<p>' + key + ': ' + data[k][key] + '</p>')
+            })
+            
         })
         
     }

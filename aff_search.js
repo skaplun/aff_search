@@ -43,11 +43,12 @@ function searchPage(url) {
 
 
 function aff_search(query, tld, brand){
+    console.log(arguments)
     currentBrand = brand;
     return new Promise(function(resolve, reject){
          return getResultsFromGoogle(query, tld).then(function(data){
             Promise.map(data, searchPage).then(function(results){
-                 resolve(arguments)
+                 resolve(results)
             })
 
         })

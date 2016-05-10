@@ -6,39 +6,24 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    
     res.render('index'); 
     
-    
 }).post('/', function(req, res){
-        var r = req.body
-        aff_search(r.keyword, r.tld, r.brand).then(function(d){
-            console.log(d)
-            res.json(d) 
-        })
-        
+        var r = req.body;
+        if(!r.keyword || !r.tld || !r.brand || r.keyword.length === 0 || r.tld.length === 0|| r.brand.length === 0){
+          res.json('please fill out all fields')  
+        }else{
+            aff_search(r.keyword, r.tld, r.brand).then(function(d){
+                console.log(d)
+                res.json(d) 
+            })
+        }
         
    
-})
+});
 
 
-router.get('/response', function(req, res) {
-    if(userObject.urlCache){
-        if(Object.keys(userObject.urlCache).length >= 1){
-            res.json(userObject.urlCache);
-        }else{
-            res.json('not yet');
-        }
-    }
-}).post('/response', function(req, res) {
-    console.log(2)
-})
-router.global = {};
 
 
 
 module.exports = router;
-
-
-
- 
