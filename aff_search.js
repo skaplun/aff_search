@@ -57,5 +57,6 @@ function aff_search(query, tld, brand){
 }
 
 
+module.exports = aff_search
 
-module.export = aff_search
+// aff_search('best casino', 'com.au', 'aladdin').then(function(data){ console.log(data) })

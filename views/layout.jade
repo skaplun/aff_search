@@ -1,9 +1,9 @@
 doctype html
 html
   head
-    title Twitatron
-    include partials/head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='../javascripts/main.js')
+    script(src='https://code.jquery.com/jquery-2.2.3.min.js')
   body
-    include partials/navigation
     block content
-    include partials/footer
