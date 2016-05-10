@@ -12,13 +12,16 @@ var app = express();
 
 // Add static middleware
 var oneDay = 86400000;
-app.use(compression());
 
 
 app.set('views', path.join(__dirname, 'views'), { maxAge: oneDay });
 app.set('view engine', 'jade');
-
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(compression());
+
+
 // Create our Express router
 var router = express.Router();
 
@@ -62,5 +65,5 @@ router.post('/', function(req, res) {
 app.use(router);
 
 // Start the server
-app.listen(process.env.PORT, process.env.IP);
-
+app.listen(3000);
+// process.env.PORT, process.env.IP
