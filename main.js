@@ -14,17 +14,17 @@ var app = express();
 var oneDay = 86400000;
 app.use(compression());
 
-app.use(express.static( path.join(__dirname, '/public')));
+
 app.set('views', path.join(__dirname, 'views'), { maxAge: oneDay });
 app.set('view engine', 'jade');
 
-
+app.use(express.static(path.join(__dirname, 'public')));
 // Create our Express router
 var router = express.Router();
 
 // Initial dummy route for testing
 router.get('/', function(req, res) {
-    res.render('home', { scripts: ['./public/client.js']});
+    res.render('home', { scripts: ['public/client.js']});
 });
 
 router.get('/response', function(req, res) {
