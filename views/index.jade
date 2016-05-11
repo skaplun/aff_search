@@ -3,15 +3,14 @@ extends layout
 block content
     h1 enter keyword, tld in google you'd like to search, and your brand name
     form(id="keySearch" name="keySearch", action="/", method="post")
-        input(type="text", name="keyword", placeholder="keyword")
-        input(type="text", name="tld", placeholder="tld")
-        input(type="text", name="brand",placeholder="brand")
-        input(type="submit")
-    div#results
-        if (typeof(data) !== 'undefined')
-            p #{data}
-        else
-            p pick something
+        input(type="text", name="keyword", placeholder="keyword", class="form-control")
+        input(type="text", name="tld", placeholder="tld", class="form-control")
+        input(type="text", name="brand",placeholder="brand", class="form-control")
+        input(type="submit", class="btn btn-default")
+    div(id="results",class="table")
+        div(id="spinner")
+       
+        
             
             
 

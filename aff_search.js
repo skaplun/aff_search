@@ -115,9 +115,7 @@ function aff_search(query, tld, brand){
     currentBrand = brand;
     return new Promise(function(resolve, reject){
          return getResultsFromGoogle(query, tld).then(function(data){
-             console.log(data)
             Promise.map(data, searchPage).then(function(results){
-                console.log(results)
                  //results is an array of objects - values of each obj is array
                 return Promise.map(results, searchPage2).then(function(r) {
                    var d = r.map(function(arr){
