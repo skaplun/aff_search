@@ -45,8 +45,8 @@ function searchPage(url) {
 
 
 
-function isBrandOnPage(html, brand){
-    var re = new RegExp(brand, 'g');
+function isBrandOnPage(html){
+    var re = new RegExp(currentBrand, 'g');
     var count = (html.match(re, /g/) || []).length;
     return count ? true : false;
     
@@ -59,7 +59,13 @@ function getAllLinks(html, url){
         var la = link.attribs
         if(la && la.href){
             if(la.href.substr(0, 4) !== 'http'){
-                la.href = url + la.href
+                var checkSlashes = url.split('/')
+                if(checkSlashes.length >= 1){
+                    la.href = checkSlashes[0] + la.href
+                }else{
+                    la.href = url + la.href
+                }
+                  
             }
             
         }
@@ -75,50 +81,56 @@ function getAllLinks(html, url){
 }
 
 function searchPage2(urlObject) {
-    console.log(urlObject)
     var urlArr = urlObject[Object.keys(urlObject)[0]];
     var urls = [];
     
     function s(url){
-        console.log(url)
             return new Promise(function(resolve, reject){
                 return request(url, function (error, response, body) {
                   if (!error && response.statusCode == 200) {
                       var tempObj = {}
                     tempObj[url] = isBrandOnPage(response.body, 'aladdin') 
-                    console.log(tempObj)
                     resolve(tempObj)
                     
                   }else{
-                      reject('s request failed')
+                      resolve('s request failed')
                   }
             })
             
         })
     }
     
-    return Promise.mapSeries(urlArr, s);
+    return Promise.map(urlArr, s);
     
         
 }
 
 
-data = ['http://www.top10casinosites.net/', 'https://www.casino.org/australia/']
+// data = ['http://www.top10casinosites.net/', 'https://www.casino.org/australia/']
 
-Promise.map(data, searchPage).then(function(results){
-       //results is an array of objects - values of each obj is array
-        return Promise.mapSeries(results, searchPage2).then(function(r) {
-            console.log(r)
-        
-        })
-})
+
+
 
 function aff_search(query, tld, brand){
     currentBrand = brand;
     return new Promise(function(resolve, reject){
          return getResultsFromGoogle(query, tld).then(function(data){
+             console.log(data)
             Promise.map(data, searchPage).then(function(results){
-                 resolve(results)
+                console.log(results)
+                 //results is an array of objects - values of each obj is array
+                return Promise.map(results, searchPage2).then(function(r) {
+                   var d = r.map(function(arr){
+                       return arr.filter(function(obj){
+                           var k= Object.keys(obj)[0]
+                           if(obj[k] === true){
+                               return obj
+                           } 
+                       })
+                   })
+                   resolve(d);
+           
+        })
             })
 
         })

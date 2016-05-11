@@ -25,7 +25,7 @@ function google (query, start, callback, tldName) {
   
 }
 
-google.resultsPerPage = 10
+google.resultsPerPage = 4
 
 google.lang = 'en'
 google.requestOptions = {}
