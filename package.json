@@ -14,6 +14,7 @@
     "express": "~4.13.4",
     "formidable": "^1.0.17",
     "jade": "~1.11.0",
+    "lodash": "^4.12.0",
     "morgan": "~1.6.1",
     "querystring": "^0.2.0",
     "request": "^2.72.0",
