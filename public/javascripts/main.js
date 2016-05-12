@@ -14,14 +14,14 @@ $(document).ready(function(){
 
     function getResponse (data){
       spinner(false)
-      console.log(data)
       data.forEach(function(arr){
-          var div = document.createElement('div.row')
-          document.getElementById('results').appendChild(div)
+          var row = document.createElement('tr')
+          row.classList.add('row')
+          document.getElementById('results').appendChild(row)
           arr.forEach(function(obj){
              var k = Object.keys(obj)[0]
-             var p = $('<p>' + k + ':' + obj[k] + '</p>').get(0)
-             div.appendChild(p)
+             var cell = $('<td>' + k + ':' + obj[k] + '</td>').get(0)
+             row.appendChild(cell)
           })
         })
     }

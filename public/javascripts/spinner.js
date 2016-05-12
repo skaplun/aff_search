@@ -200,7 +200,6 @@
       })
 
       if (target) {
-          console.log(target)
         $(target).before(el, target.firstChild || null)
       }
 

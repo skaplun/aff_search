@@ -7,8 +7,12 @@ block content
         input(type="text", name="tld", placeholder="tld", class="form-control")
         input(type="text", name="brand",placeholder="brand", class="form-control")
         input(type="submit", class="btn btn-default")
-    div(id="results",class="table")
-        div(id="spinner")
+    div(class="panel panel-default")
+        div(class="panel-heading")
+            h3(class="panel-title") Your results
+        div(class="panel-body")
+            div(id="spinner")
+             table(class="table", id="results")
        
         
             
