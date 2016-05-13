@@ -10,6 +10,7 @@ router.get('/', function(req, res) {
     
 }).post('/', function(req, res){
         var r = req.body;
+
         if(!r.keyword || !r.tld || !r.brand || r.keyword.length === 0 || r.tld.length === 0|| r.brand.length === 0){
           res.json('please fill out all fields')  
         }else{

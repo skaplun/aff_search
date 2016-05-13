@@ -3,31 +3,30 @@ $(document).ready(function(){
     
     $('#keySearch').submit(function(e){
         e.preventDefault();
+        
         spinner(true)
-        data = $(this).serialize()
+        
+        data = $(this).serializeArray()
+        // displayCheckingAlert(data)
         
         
-        $.post('/', data, getResponse)
+        $.post('/', data, searchResults)
      
     })
-
-
-    function getResponse (data){
-      spinner(false)
-      data.forEach(function(arr){
-          var row = document.createElement('tr')
-          row.classList.add('row')
-          document.getElementById('results').appendChild(row)
-          arr.forEach(function(obj){
-             var k = Object.keys(obj)[0]
-             var cell = $('<td>' + k + ':' + obj[k] + '</td>').get(0)
-             row.appendChild(cell)
-          })
-        })
-    }
+    
 })
 
-function spinner(on){
+function searchResults (data){
+        
+  spinner(false)
+//   $('.alert').remove();
+  
+  arrangeResults(data)
+    
+}
+
+
+function spinner (on) {
     if(on){
         var opts = {
       lines: 13 // The number of lines to draw
@@ -60,3 +59,73 @@ function spinner(on){
     
 }
 
+var arrangeResults = function(result){
+    
+    var table = document.getElementById('results')
+
+    var caption = document.createElement('caption')
+    caption.innerHTML = '<h2><strong>Query </strong>: ' + result['query'] +  
+                            ', <strong>TLD</strong>: ' + result['tld'] +
+                            ', <strong>Brand</strong>: ' + result['brand'] + '</h2>';
+
+    table.appendChild(caption);
+    var tHead = document.createElement('thead');
+    var headerRow = document.createElement('tr');
+    table.appendChild(tHead);
+    tHead.appendChild(headerRow);
+
+    ['position', 'entry page', 'pages with brand keyword'].forEach(function(text){
+            var headerCell = document.createElement('th');
+            var contentFrag = document.createTextNode(text);
+            headerCell.appendChild(contentFrag);
+            headerRow.appendChild(headerCell);
+    })
+
+    var tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+
+    result.searchResults.forEach(function(sr, index){
+        var bodyRow = document.createElement('tr');
+        var trueResults = result.links[index].map(function(obj){
+                    return Object.keys(obj)[0];
+                }).join(', ')
+                
+        
+        [( index + 1), sr, trueResults].forEach(function(cellText){
+            var bodyCell = document.createElement('td');
+            var contentFrag = document.createTextNode(cellText);
+            bodyCell.appendChild(contentFrag);
+            bodyRow.appendChild(bodyCell);
+        }) 
+
+        tbody.appendChild(bodyRow);
+    })
+}
+
+ 
+var displayCheckingAlert = function(data){
+    
+    var alert = document.createElement('div')
+    alert.classList.add('alert')
+    alert.classList.add('alert-success')
+    var dArr = data.split('&');
+     $(alert).insertBefore('#resultsPanel');
+     
+    var initialContent = document.createTextNode("we are looking for ");
+    alert.appendChild(initialContent);
+    
+    alert.textContnet = ''
+    dArr.forEach(function(dCombo){
+        
+        var d = dCombo.split('=')
+        
+        if(d[0] === 'brand'){
+             var contentFrag = document.createTextNode(d[0] + ':' + d[1]);
+        }else{
+             var contentFrag = document.createTextNode(d[0] + ':' + d[1] + ', ');
+        }
+        alert.appendChild(contentFrag);
+        
+    })
+   
+}

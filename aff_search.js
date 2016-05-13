@@ -46,9 +46,16 @@ function searchPage(url) {
 
 
 function isBrandOnPage(html){
-    var re = new RegExp(currentBrand, 'g');
-    var count = (html.match(re, /g/) || []).length;
-    return count ? true : false;
+    //split brand text into array
+    var cb = currentBrand.split(',')
+    var r = cb.filter(function(brandToken){
+        var re = new RegExp(brandToken, 'g');
+        var existsOnPage = (html.match(re, /g/) || []).length;
+        if(existsOnPage >= 1) {
+            return true
+        }
+    })
+    return r.length >= 1? true : false;
     
 }
 
@@ -109,24 +116,46 @@ function searchPage2(urlObject) {
 // data = ['http://www.top10casinosites.net/', 'https://www.casino.org/australia/']
 
 
+function removePagesWithoutBrand(r){
+     return r.map(function(arr){
+       return arr.filter(function(obj){
+           var k= Object.keys(obj)[0]
+           if(obj[k] === true){
+               return k
+           } 
+       })
+   })
+    
+}
 
+function formatResults(query, tld, brand, searchResults, removed){
+    var resultObj = {
+        query: query,
+        tld : tld,
+        brand : brand,
+        searchResults : searchResults,
+        links : removed
+        
+    }
+    return resultObj;
+    
+}
 
 function aff_search(query, tld, brand){
     currentBrand = brand;
+    
     return new Promise(function(resolve, reject){
-         return getResultsFromGoogle(query, tld).then(function(data){
-            Promise.map(data, searchPage).then(function(results){
+        
+         return getResultsFromGoogle(query, tld).then(function(searchResults){
+             
+            Promise.map(searchResults, searchPage).then(function(urls){
+                
                  //results is an array of objects - values of each obj is array
-                return Promise.map(results, searchPage2).then(function(r) {
-                   var d = r.map(function(arr){
-                       return arr.filter(function(obj){
-                           var k= Object.keys(obj)[0]
-                           if(obj[k] === true){
-                               return obj
-                           } 
-                       })
-                   })
-                   resolve(d);
+                return Promise.map(urls, searchPage2).then(function(r) {
+                    var removed = removePagesWithoutBrand(r)
+                    var formatted = formatResults(query, tld, brand, searchResults, removed);
+                    
+                    resolve(formatted);
            
         })
             })
@@ -137,6 +166,14 @@ function aff_search(query, tld, brand){
    
 }
 
+// data structure
+// {
+//     1 : 
+//     {
+//         entryPage : 'url',
+//         urls : []
+//     }
+// }
 
 module.exports = aff_search
 
