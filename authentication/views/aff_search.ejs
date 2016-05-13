@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    
+    <link rel='stylesheet' href='/stylesheets/style.css'></link>
+    <script src='https://code.jquery.com/jquery-2.2.3.min.js'></script>
+    <script src='../javascripts/main.js'></script>
+    <script src='../javascripts/spinner.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    
+    
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Affiliate Search</h1>
+        <h2>Enter keyword tld in google you'd like to search and your brand name</h2>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+    <div class="col-sm-9">
+          <form id="keySearch" name="keySearch" action="/" method="post">
+              <input type="text" name="keyword" placeholder="keyword" class="form-control"></input>
+        <input type="text" name="tld" placeholder="tld" class="form-control"></input>
+        <input type="text" name="brand" placeholder="brand" class="form-control"></input>
+            <input type="submit" class="btn btn-default"></input>
+            
+            </form>
+        
+        <div id="resultsPanel" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Your results</h3>
+            </div>
+            <div class="panel-body">
+                <div id="spinner"></div>
+                 <table class="table" id="results"></table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
