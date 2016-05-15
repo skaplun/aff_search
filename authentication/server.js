@@ -1,10 +1,11 @@
 // server.js
+// based on: https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 
 // set up ======================================================================
 // get all the tools we need
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 8080;
+var port     = 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');

@@ -63,24 +63,25 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
-    
+    // =====================================
+    // AFF SEARCH ==============================
+    // =====================================
     app.get('/aff_search', isLoggedIn, function(req, res) {
         res.render('aff_search.ejs'); 
     
-    }).post('/aff_search',isLoggedIn, function(req, res){
+    });
+    
+    app.post('/aff_search', function(req, res){
         var r = req.body;
-
         if(!r.keyword || !r.tld || !r.brand || r.keyword.length === 0 || r.tld.length === 0|| r.brand.length === 0){
           res.json('please fill out all fields')  
         }else{
             aff_search(r.keyword, r.tld, r.brand).then(function(d){
-                console.log(d)
                 res.json(d) 
             })
         }
-        
-   
-});
+
+    });
     
     
 };

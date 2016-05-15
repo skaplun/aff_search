@@ -9,7 +9,7 @@ $(document).ready(function(){
         data = $(this).serializeArray()
         // displayCheckingAlert(data)
         
-        
+        console.log(1)
         $.post('/aff_search', data, searchResults)
      
     })
@@ -60,8 +60,15 @@ function spinner (on) {
 }
 
 var arrangeResults = function(result){
-    
     var table = document.getElementById('results')
+    
+    if(typeof(result) === 'string'){
+        var contentFrag = document.createTextNode(result);
+    
+        table.appendChild(contentFrag)
+        return;
+    }
+    
 
     var caption = document.createElement('caption')
     caption.innerHTML = '<h2><strong>Query </strong>: ' + result['query'] +  
@@ -86,11 +93,25 @@ var arrangeResults = function(result){
 
     result.searchResults.forEach(function(sr, index){
         var bodyRow = document.createElement('tr');
-        var trueResults = result.links[index].map(function(obj){
+        var pagesWithBrand = result.links[index]
+        var trueResults;
+        
+        if(Array.isArray(pagesWithBrand)){
+             trueResults  = pagesWithBrand.map(function(obj){
                     return Object.keys(obj)[0];
                 }).join(', ')
-                
+        }else{
+            if(trueResults === undefined){
+                trueResults = 'no results'
+            }else{
+                trueResults = pagesWithBrand;
+            
+            }
+            
+        }      
+         
         
+       
         [( index + 1), sr, trueResults].forEach(function(cellText){
             var bodyCell = document.createElement('td');
             var contentFrag = document.createTextNode(cellText);
