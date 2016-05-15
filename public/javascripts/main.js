@@ -132,6 +132,28 @@ var arrangeResults = function(result){
         tbody.appendChild(bodyRow);
     })
     $('#results').DataTable()
+    addBatchButtons();
+   
+        
+}
+
+var followRows = function(){
+    
+    
+}
+
+var addBatchButtons = function(){
+        var t = document.getElementById('batch_buttons');
+        var clone = document.importNode(t.content, true);
+        document.getElementById('resultsPanel').appendChild(clone);
+        
+        $('#batch_dropdown').on('click', 'a', function(e){
+            e.preventDefault();
+            if(e.target.id === 'followRows'){
+                followRows()
+            }
+           
+        })
     
 }
 
