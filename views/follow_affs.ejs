@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <title>Followed affs</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Followed Affiliates</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <a href="/aff_search" class="btn btn-default btn-sm">Aff Search</a>
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span> Followed affiliates </h3>
+                    <% results.forEach(function(result) { %>
+                `       <%if (results.length > 0) { %>
+                            <li><%= Object.keys(result)[0] %> - <%= result[Object.keys(result)[0]] %></li>
+                        <% } %>
+                    <% }); %>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

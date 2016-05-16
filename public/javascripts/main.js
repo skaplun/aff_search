@@ -201,7 +201,7 @@ var followRows = function(){
             results.push(tempObj);
         }
     })
-    $.post('/follow_rows', JSON.stringify(results) , followSuccess);
+    $.post('/follow_affs', JSON.stringify(results) , followSuccess);
     
 }
 

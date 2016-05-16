@@ -89,8 +89,15 @@ module.exports = function(app, passport) {
     // FOLLOW ROWS ==============================
     // =====================================
     
-     app.post('/follow_rows', function(req, res) {
-        follow_affs(req, res)
+    app.get('/follow_affs',isLoggedIn, function(req, res) {
+        follow_affs.getFollowed(req, res).then(function(data){
+            res.render('follow_affs.ejs', {results : data})
+        })
+    
+    });
+    
+     app.post('/follow_affs', function(req, res) {
+        follow_affs.follow(req, res)
     
     });
 };

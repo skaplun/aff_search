@@ -67,7 +67,37 @@ function follow(sites_array, user){
    
 }
 
-function follow_affs(req, res) {
+function getFollowedAffs(req, res){
+    
+    return new Promise(function(resolve, reject){
+        
+        User.findOne(req.user, function (err, user) {
+            
+            if(!err){
+                
+                var resultArray = user['followingAffs']['sites']
+                var r = resultArray.map(function(resultObj){
+                    var k = Object.keys(resultObj)[0]
+                    var v = resultObj[k]
+                    var newK = k.replace(/\[dot]/g, '.');
+                    resultObj[newK] = v
+                    delete(resultObj[k])
+                    return resultObj
+                    
+                })
+                resolve(r)
+            }else{
+                resolve('could not get affiliates')
+            }
+        
+        })
+        
+    })
+    
+}
+
+
+function follow(req, res) {
 
     var sites_array = JSON.parse(Object.keys(req.body)[0]);
     var f = follow(sites_array, req.user, res).then(function(data) {
@@ -77,4 +107,7 @@ function follow_affs(req, res) {
 }
 
 
-module.exports = follow_affs
+module.exports = {
+    follow : follow,
+    getFollowed :  getFollowedAffs
+}
