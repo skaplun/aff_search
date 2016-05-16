@@ -15,10 +15,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
-// var configDB = require('./config/database.js');
+ var configDB = require('./config/database.js');
 
 // configuration ===============================================================
-// mongoose.connect(configDB.url); // connect to our database
+ mongoose.connect(configDB.url); // connect to our database
 
  require('./config/passport')(passport); // pass passport for configuration
 
@@ -42,5 +42,6 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
-app.listen(process.env.PORT,  process.env.IP);
+app.listen(port);
+// process.env.PORT,  process.env.IP
 console.log('The magic happens on port ' + port);

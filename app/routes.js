@@ -1,4 +1,5 @@
 var aff_search = require('./../aff_search')
+var follow_affs = require('./../follow_affs')
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -63,10 +64,11 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+    
     // =====================================
     // AFF SEARCH ==============================
     // =====================================
-    app.get('/aff_search', function(req, res) {
+    app.get('/aff_search',isLoggedIn, function(req, res) {
         res.render('aff_search.ejs'); 
     
     });
@@ -83,7 +85,14 @@ module.exports = function(app, passport) {
 
     });
     
+    // =====================================
+    // FOLLOW ROWS ==============================
+    // =====================================
     
+     app.post('/follow_rows', function(req, res) {
+        follow_affs(req, res)
+    
+    });
 };
 
 // route middleware to make sure a user is logged in
