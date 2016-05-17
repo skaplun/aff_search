@@ -212,7 +212,7 @@ function aff_search(query, tld, brand) {
              if(searchResults === 'overusedGoogle' ){
                  resolve('overused google tld');
              }else{
-                return openPages(searchResults).then(function(r) 
+                return openPages(searchResults).then(function(r){ 
                         
                         resolve({
                             query: query,
