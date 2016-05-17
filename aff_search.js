@@ -201,6 +201,7 @@ function openPages(urlArray){
      return Promise.map(urlArray, searchPage).then(function(urls){ 
                  //results is an array of objects - values of each obj is array
                     return Promise.map(urls, searchPage2)
+     })
 }
 
 function aff_search(query, tld, brand) {
