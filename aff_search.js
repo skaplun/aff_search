@@ -197,31 +197,11 @@ function removePagesWithoutBrand(r){
     
 }
 
-function getDateTime() {
-
-    var date = new Date();
-
-    var hour = date.getHours();
-    hour = (hour < 10 ? "0" : "") + hour;
-
-    var min  = date.getMinutes();
-    min = (min < 10 ? "0" : "") + min;
-
-    var sec  = date.getSeconds();
-    sec = (sec < 10 ? "0" : "") + sec;
-
-    var year = date.getFullYear();
-
-    var month = date.getMonth() + 1;
-    month = (month < 10 ? "0" : "") + month;
-
-    var day  = date.getDate();
-    day = (day < 10 ? "0" : "") + day;
-
-    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
-
+function openPages(urlArray){
+     return Promise.map(urlArray, searchPage).then(function(urls){ 
+                 //results is an array of objects - values of each obj is array
+                    return Promise.map(urls, searchPage2)
 }
-
 
 function aff_search(query, tld, brand) {
     userGlobalVarials.brand = brand
@@ -231,11 +211,7 @@ function aff_search(query, tld, brand) {
              if(searchResults === 'overusedGoogle' ){
                  resolve('overused google tld');
              }else{
-                return Promise.map(searchResults, searchPage).then(function(urls){
-                    
-                 //results is an array of objects - values of each obj is array
-
-                    return Promise.map(urls, searchPage2).then(function(r) {
+                return openPages(searchResults).then(function(r) 
                         
                         resolve({
                             query: query,

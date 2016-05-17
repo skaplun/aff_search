@@ -68,7 +68,7 @@ module.exports = function(app, passport) {
     // =====================================
     // AFF SEARCH ==============================
     // =====================================
-    app.get('/aff_search',isLoggedIn, function(req, res) {
+    app.get('/aff_search', function(req, res) {
         res.render('aff_search.ejs'); 
     
     });
